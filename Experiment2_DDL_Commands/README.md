@@ -104,166 +104,171 @@ CREATE TABLE Table_Name (
 ```
 
 **Question 1**
---Create a new table named item with the following specifications and constraints:
-item_id as TEXT and as primary key.
-item_desc as TEXT.
-rate as INTEGER.
-icom_id as TEXT with a length of 4.
-icom_id is a foreign key referencing com_id in the company table.
-The foreign key should cascade updates and deletes.
-item_desc and rate should not accept NULL.
+--
+-- Write a SQL Query  to change the name of attribute "name" to "first_name"  and add mobilenumber as number ,DOB as Date in the table Companies. 
 
 ```sql
-create table item(
-item_id TEXT PRIMARY KEY,
-item_desc TEXT NOT NULL,
-rate INTEGER,
-icom_id TEXT(4),
-FOREIGN KEY (icom_id) REFERENCES company(com_id)
-ON UPDATE CASCADE 
-ON DELETE CASCADE
-);
+ ALTER TABLE Companies
+rename name to first_name;
+ALTER TABLE Companies
+ADD COLUMN mobilenumber number;
+ALTER TABLE Companies
+ADD COLUMN DOB Date;
 ```
 
 **Output:**
 
-<img width="1132" height="329" alt="image" src="https://github.com/user-attachments/assets/4b9ec616-2744-4663-bd4c-a41aa4d8967d" />
+![image](https://github.com/user-attachments/assets/5adebeca-9b74-4b1f-92cf-9f64990c7825)
 
 
 **Question 2**
 ---
-Create a table named Invoices with the following constraints:
-
-InvoiceID as INTEGER should be the primary key.
-InvoiceDate as DATE.
-DueDate as DATE should be greater than the InvoiceDate.
-Amount as REAL should be greater than 0.
+-- Create a table named Products with the following constraints:
+ProductID as INTEGER should be the primary key.
+ProductName as TEXT should be unique and not NULL.
+Price as REAL should be greater than 0.
+StockQuantity as INTEGER should be non-negative.
 
 ```sql
-create table Invoices(
-InvoiceID integer primary key,
-InvoiceDate date,
-DueDate date check(DueDate>InvoiceDate),
-Amount real check(Amount>0)
+ CREATE TABLE Products
+(
+ProductID INTEGER primary key,
+ProductName TEXT UNIQUE NOT NULL,
+Price REAL CHECK(Price>0),
+StockQuantity INTEGER CHECK(StockQuantity>0)
+);
+```
+
+**Output:**
+![image](https://github.com/user-attachments/assets/657c18ee-68f3-45d8-9773-acb008602e21)
+
+
+**Question 3**
+---
+-- Create a table named Products with the following columns:
+
+ProductID as INTEGER
+ProductName as TEXT
+Price as REAL
+Stock as INTEGER
+
+```sql
+CREATE TABLE Products
+(
+ProductID INTEGER,
+ProductName TEXT,
+Price REAL,
+Stock INTEGER
 );
 ```
 
 **Output:**
 
-<img width="1151" height="266" alt="image" src="https://github.com/user-attachments/assets/0b088726-aa58-4c3c-8a04-2372adcfcda2" />
+![image](https://github.com/user-attachments/assets/0d1e2ed1-fee3-4cd1-9107-215e72ef9594)
 
 
-**Question 3**
+**Question 4**
 ---
-Insert the following employees into the Employee table:
+-- Insert the following employees into the Employee table:
 
 EmployeeID  Name        Position    Department  Salary
 ----------  ----------  ----------  ----------  ----------
 2           John Smith  Developer   IT          75000
 3           Anna Bell   Designer    Marketing   68000
-
 ```sql
-INSERT INTO Employee (EmployeeID,Name,Position,Department,Salary)VALUES (2,'John Smith','Developer','IT',75000),(3,'Anna Bell','Designer','Marketing',68000)
+INSERT INTO Employee(EmployeeID,Name,Position,Department ,Salary)
+values(2,           'John Smith'  ,'Developer'  , 'IT'  ,        75000);
+INSERT INTO Employee(EmployeeID,Name,Position,Department ,Salary)
+values(3,           'Anna Bell'  ,'Designer'  , 'Marketing'  ,        68000);
 ```
 
 **Output:**
-
-<img width="1191" height="393" alt="image" src="https://github.com/user-attachments/assets/1ca8bbe3-839b-4745-ae9b-0ee42de00c5f" />
-
-**Question 4** 
----
-create a table named jobs including columns job_id, job_title, min_salary and max_salary, and make sure that, the default value for job_title is blank and min_salary is 8000 and max_salary is NULL will be entered automatically at the time of insertion if no value assigned for the specified columns.
-
-```sql
-create table jobs(
-job_id integer primary key,
-job_title text default '',
-min_salary integer default 8000,
-max_salary integer default null
-);
-```
-
-**Output:**
-
-<img width="1144" height="324" alt="image" src="https://github.com/user-attachments/assets/f5270212-b505-4b67-ab2c-eb56bfd29047" />
+![image](https://github.com/user-attachments/assets/19871a6d-b967-4892-969b-07e40479cefd)
 
 
 **Question 5**
 ---
-Create a table named Locations with the following columns:
+--Create a table named Departments with the following columns:
 
-LocationID as INTEGER
-LocationName as TEXT
-Address as TEXT
+DepartmentID as INTEGER
+DepartmentName as TEXT
 
 ```sql
-create table Locations(
-LocationID INTEGER,
-LocationName TEXT,
-Address TEXT
+CREATE TABLE Departments
+(
+DepartmentID INTEGER,
+DepartmentName TEXT
+
 );
 ```
 
 **Output:**
 
-<img width="1161" height="364" alt="image" src="https://github.com/user-attachments/assets/a39292c6-b5de-47ed-bee5-846f0c194f1e" />
-
+![image](https://github.com/user-attachments/assets/03354192-0e68-429e-adbc-8e3145b9ac23)
 
 **Question 6**
 ---
-Insert the following students into the Student_details table:
+-- Insert the below data into the Employee table, allowing the Department and Salary columns to take their default values.
+
+EmployeeID  Name         Position
+----------  -----------  ----------
+4           Emily White  Analyst
+
+Note: The Department and Salary columns will use their default values.  
+
+```sql
+INSERT INTO Employee(EmployeeID,Name,Position)
+values(4           ,'Emily White','Analyst');
+```
+
+**Output:**
+![image](https://github.com/user-attachments/assets/fedeb403-34e6-4d28-bef6-f5ce460d2a0d)
+
+
+
+**Question 7**
+---
+-- Create a table named Orders with the following constraints:
+OrderID as INTEGER should be the primary key.
+OrderDate as DATE should be not NULL.
+CustomerID as INTEGER should be a foreign key referencing Customers(CustomerID).
+
+```sql
+CREATE TABLE Orders
+(
+OrderID INTEGER primary key,
+OrderDate DATE NOT NULL,
+CustomerID INTEGER,
+FOREIGN KEY(CustomerID) REFERENCES Customers(CustomerID)
+);
+
+```
+
+**Output:**
+
+![image](https://github.com/user-attachments/assets/e2810841-1cfc-47c6-8ec1-85d72545f94d)
+
+
+**Question 8**
+---
+-- Insert the following students into the Student_details table:
 RollNo      Name        Gender      Subject     MARKS
 ----------  ----------  ----------  ----------  ----------
 202            Ella King         F           Chemistry   87
 203            James Bond   M          Literature    78
 
+ 
+
 ```sql
-insert into Student_details(RollNO,Name,Gender,Subject,MARKS) values(202,'Ella King','F','Chemistry',87);
-insert into Student_details values(203,'James Bond','M','Literature',78);
+INSERT INTO Student_details(RollNo ,Name    ,    Gender  ,    Subject ,    MARKS)
+values(202       ,  'Ella King'  ,'F','Chemistry' ,  87);
+INSERT INTO Student_details(RollNo ,Name    ,    Gender  ,    Subject ,    MARKS)
+values(203       ,  'James Bond'  ,'M','Literature' ,  78);
 ```
 
 **Output:**
 
-<img width="1154" height="257" alt="image" src="https://github.com/user-attachments/assets/349ebd42-fe5b-4726-905a-b16f9a5b8513" />
-
-
-**Question 7**
----
-Insert all students from Archived_students table into the Student_details table.
-
-cid         name        type        notnull     dflt_value  pk
-----------  ----------  ----------  ----------  ----------  ----------
-0           RollNo      INT           0                       1
-1           Name        VARCHAR(100)  0                       0
-2           Gender      VARCHAR(10)   0                       0
-3           Subject     VARCHAR(50)   0                       0
-4           MARKS       INT           0                       0
-
-```sql
-INSERT INTO Student_details
-SELECT * FROM Archived_students
-```
-
-**Output:**
-
-<img width="1170" height="276" alt="image" src="https://github.com/user-attachments/assets/b53cd642-7474-4edb-9101-af1c2aee676c" />
-
-
-**Question 8**
----
-Write a SQL query to modify the Student_details table by adding a new column Email of type VARCHAR(50) and updating the column MARKS to have a default value of 0.
-
-```sql
-alter table Student_details 
-add column Email VARCHAR(50);
-alter table Student_details
-add column MARKS integer default 0;
-```
-
-**Output:**
-
-<img width="1153" height="233" alt="image" src="https://github.com/user-attachments/assets/8b82343f-b526-4b3b-aba2-f54ac8ec348b" />
-
+![image](https://github.com/user-attachments/assets/747af22d-e1ed-4b8b-a4a0-1747733f20ad)
 
 **Question 9**
 ---
@@ -273,37 +278,39 @@ item_desc as TEXT.
 rate as INTEGER.
 icom_id as TEXT with a length of 4.
 icom_id is a foreign key referencing com_id in the company table.
-The foreign key should set NULL on updates and deletes.
+The foreign key should cascade updates and deletes.
 item_desc and rate should not accept NULL.
-
 ```sql
-CREATE TABLE item(
-item_id TEXT PRIMARY KEY,
+CREATE TABLE item
+(
+item_id TEXT primary key,
 item_desc TEXT not null,
 rate INTEGER not null,
-icom_id text check(LENGTH(icom_id)==4),
-FOREIGN KEY (icom_id) REFERENCES company(com_id)
-ON UPDATE SET NULL
-ON DELETE SET NULL
+icom_id TEXT(4),
+FOREIGN KEY(icom_id) REFERENCES company(com_id)
+on update cascade
+on delete cascade
 );
 ```
 
 **Output:**
-
-<img width="1142" height="335" alt="image" src="https://github.com/user-attachments/assets/ffb1b7f4-e1ad-41d0-b264-4c55427c96a7" />
+![image](https://github.com/user-attachments/assets/45c5daeb-3428-40b2-a4f8-3f85f20f5c02)
 
 
 **Question 10**
 ---
-Insert a product with ProductID 104, Name Tablet, and Category Electronics into the Products table, where Price and Stock should use default values.
+--Write an SQL query to add two new columns, designation and net_salary, to the table Companies. The designation column should have a data type of varchar(50), and the net_salary column should have a data type of number.
 
 ```sql
-INSERT INTO Products(ProductID, Name, Category, Price, Stock) Values(104,'Tablet','Electronics',100,50);
+ALTER TABLE Companies
+ADD COLUMN designation varchar(50);
+ALTER TABLE Companies
+ADD COLUMN net_salary number;
 ```
 
 **Output:**
 
-<img width="1170" height="266" alt="image" src="https://github.com/user-attachments/assets/34dbbdb6-b998-493e-b24a-c7afce3aaf43" />
+![image](https://github.com/user-attachments/assets/069fcc9f-5be0-400e-9cea-ae0a057886b6)
 
 
 
